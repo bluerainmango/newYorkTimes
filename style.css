@@ -48,3 +48,18 @@ form > input {
 .btn {
     font-size: 1.5rem;
 }
+.index,
+.title {
+    display: inline-block;
+}
+.index {
+    font-size: 2rem;
+    padding: 0 1rem;
+    border: 1px grey solid;
+}
+.title{ font-weight: bolder; color: brown; }
+
+.title,
+.author {
+    font-size: 1.5rem;
+}
