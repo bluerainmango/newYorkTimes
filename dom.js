@@ -1,7 +1,7 @@
 // User input data
 var userInput = {
-    term: null,
-    num: null,
+    term: null, // Search Term
+    num: null, // Number of Records to Retrieve
     startYear: null,
     endYear: null    
 }
