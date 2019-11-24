@@ -7,38 +7,41 @@
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="./style.css">
-    <title>Document</title>
+    <title>New York Times Search</title>
 </head>
 <body>
     
-<header class="heading_title"><h1>New York Times Search</h1></header>
+<header class="heading_title"><h1>📰 New York Times Search</h1></header>
 
 <div class="search">
-    <form action="">
+    <form>
         <div class="heading">Search Parameters</div>
-        <!-- <label for="#searchTerm">Search Term</label> -->
-        <input type="text" name="searchTerm" id="searchTerm" placeholder="Search Term">
-        <input type="text" name="num" id="num" placeholder="Number of Records to Retrieve">
-        <input type="text" name="startYear" id="startYear" placeholder="Start Year(Optional)">
-        <input type="text" name="endYear" id="endYear" placeholder="End Year(Optional)">
-        <button type="submit" class="btn" id="searchBtn">🎮Search</button>
-        <button class="btn" id="clearBtn">🧹Clear Results</button>
+        <input id="term" type="text" placeholder="Search Term">
+        <input id="num" type="number" placeholder="Number of Records to Retrieve">
+        <input id="startYear" type="text" placeholder="Start Year(Optional)">
+        <input id="endYear" type="text" placeholder="End Year(Optional)">
+        <button id="searchBtn" class="btn" type="submit">🎮 Search</button>
+        <button id="clearBtn" class="btn">🧹 Clear Results</button>
     </form>
 </div>
 
 <main class="topArticles">
     <div class="heading">Top Articles</div>
-    <div id="articles-go-here">
-        <div class="index" data-index="">1</div>
-        <div class="title" data-title="">This is title</div>
-        <div class="author">by <span class="author-name">emily</span></div>
-    </div>
+    <div id="articles-go-here"></div>
 </main>
 
-<!-- jQuery & Bootstrap -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<footer>
+    <p class="madeBy">Made by Emily Yu, Hayden Cross, and Israel Beltran. <br>👩👱‍♂️🧔</p>
+</footer>
+
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- js 1.Get userInput & Render to web -->
 <script src ="./dom.js"></script>
+
+<!-- js 2.Get data from API -->
+<script src="./script.js"></script>
+
 </body>
 </html>

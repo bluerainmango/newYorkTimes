@@ -1,41 +1,54 @@
+// User input data
 var userInput = {
-    searchTerm: null,
+    term: null,
     num: null,
     startYear: null,
     endYear: null    
 }
 
 // Data from backend will be saved here. 
-var serverData = {
-    title: "this is title",
-    author: "this is author"
-}
+// format: [{ title: , author: }, { title: , author: }...]
+// Inserted for example
+var serverData = [
+                    { title: "This is test title", author: "Emily"},
+                    { title: "This is test title 2", author: "Tom"}
+                ];
 
 $('#searchBtn').on('click',function(e){
+
     e.preventDefault();
-    // Get inputs
-    userInput.searchTerm = $('#searchTerm').val();
+
+    // Get inputs from DOM
+    userInput.term = $('#term').val();
     userInput.num = $('#num').val();
     userInput.startYear = $('#startYear').val();
     userInput.endYear = $('#endYear').val();
-    $('input').val("");
-    
+
+    console.log(userInput);
+
     // Render
     renderArticles();
 });
+
+function renderArticles(){
+    
+    for( var i=0 ; i < serverData.length ; i++ ){
+
+        // Render data to DOM
+        var article =  `<div class="article">
+                            <div class="index">${i+1}</div>
+                            <div class="article__content">
+                                <div class="title">${serverData[i].title}</div>
+                                <div class="author">by 
+                                    <span class="authorName">${serverData[i].author}</span>
+                                </div>
+                        </div>`
+
+        $('#articles-go-here').append(article);  
+    }
+};
 
 $('#clearBtn').on('click',function(e){
     e.preventDefault();
     $('#articles-go-here').empty();
 });
-
-function renderArticles(){
-    // index, title, by author data
-    var index = 1;
-    var title = $('<div>').append(serverData.title).attr('data-index',serverData.title);
-    var author = $('<div>').text('by');
-    $('<span>').append(serverData.author).attr('data-name',serverData.author);
-    // $('articles-go-here').
-};
-
-console.log(userInput);
