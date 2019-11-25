@@ -7,7 +7,12 @@ var userInput = {
 }
 
 // Data from backend will be saved here. 
-var serverData = [];
+// format: [{ title: , author: }, { title: , author: }...]
+// Inserted for example
+var serverData = [
+                    { title: "This is test title", author: "Emily"},
+                    { title: "This is test title 2", author: "Tom"}
+                ];
 
 $('#searchBtn').on('click',function(e){
 
@@ -22,25 +27,20 @@ $('#searchBtn').on('click',function(e){
     console.log(userInput);
 
     // Render
-    // renderArticles();
+    renderArticles();
 });
 
 function renderArticles(){
     
-    $('#articles-go-here').empty();
-
-    for( var i=0 ; i < userInput.num ; i++ ){
+    for( var i=0 ; i < serverData.length ; i++ ){
 
         // Render data to DOM
         var article =  `<div class="article">
                             <div class="index">${i+1}</div>
                             <div class="article__content">
-                                <div class="title">
-                                    <a href="${serverData[i].web_url}">${serverData[i].headline.main}
-                                    </a>
-                                </div>
-                                <div class="author">
-                                    <span class="authorName">${serverData[i].byline.original}</span>
+                                <div class="title">${serverData[i].title}</div>
+                                <div class="author">by 
+                                    <span class="authorName">${serverData[i].author}</span>
                                 </div>
                         </div>`
 
