@@ -84,6 +84,8 @@ $("document").ready(function(){
         
         pagenation(userInput.num);
         
+        serverData.articles = [];
+        
         // Store server data to one array
         for( var i=0 ; i <= serverData.page; i++){
           
