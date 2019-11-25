@@ -64,7 +64,7 @@ $("document").ready(function(){
 
         if( Number(userInput.num) > 30 || Number(userInput.num) < 0 ){
             alert("Please insert the number of records to retrieve between 1 and 30. This is to prevent from too many request to server and we can get you the data stably.");
-            throw new Error('🚧 Too high number to request.'); 
+            throw new Error('🚧 Too high or negative number to request.'); 
         }
         
         console.log('Getting user input....🦊', userInput)
