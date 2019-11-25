@@ -44,18 +44,29 @@ $("document").ready(function(){
             throw new Error('🚧 Required inputs are missing!');
 
         }
-        
+
         // 2. If option value is invalid
             // a. Start or End year is not 4 digits
-            // b. Start year is bigger than End year
-        if(userInput.startYear && userInput.startYear.length !== 4 
-            || userInput.endYear && userInput.endYear.length !== 4
-            || Number(userInput.startYear) > Number(userInput.endYear)){
-         
-            alert("Invalid input for Start Year or End Year! Please insert full year and make sure the Start Year is before or the same of the End Year.");
+        if( (userInput.startYear && userInput.startYear.length !== 4) 
+            || (userInput.endYear && userInput.endYear.length !== 4) ){
+ 
+            alert("Invalid input for Start Year or End Year! Please insert full year and ");
             throw new Error('🚧 Invalid input for Start Year or End Year.'); 
 
         }
+            // b. Start year is after of End year
+        if(userInput.startYear && userInput.endYear){
+            if(Number(userInput.startYear) > Number(userInput.endYear)){
+                alert("Start Year cannot be after End Year! Please make sure the Start Year is before or the same of the End Year.");
+                throw new Error('🚧 The Start Year is after of the End Year.'); 
+            }
+        }
+
+        if( Number(userInput.num) > 30 || Number(userInput.num) < 0 ){
+            alert("Please insert the number of records to retrieve between 1 and 30. This is to prevent from too many request to server and we can get you the data stably.");
+            throw new Error('🚧 Too high number to request.'); 
+        }
+        
         console.log('Getting user input....🦊', userInput)
     }
     function pagenation(num){
@@ -72,7 +83,7 @@ $("document").ready(function(){
         if(userInput.startYear || userInput.endYear){
             
             // If one of the option field is empty, set to default( Start date: 1900-01-01, End date: today )
-            var beginDateQuery = userInput.startYear ? `&begin_date=${userInput.startYear+'0101'}` : 19000101;
+            var beginDateQuery = userInput.startYear ? `&begin_date=${userInput.startYear+'0101'}` : `&begin_date=19000101`;
             var endDateQuery = userInput.endYear ? `&end_date=${userInput.endYear+'1231'}` : `&end_date=${serverData.currentDate()}`;
             
             query = query.concat(beginDateQuery, endDateQuery);
@@ -85,7 +96,7 @@ $("document").ready(function(){
         pagenation(userInput.num);
         
         serverData.articles = [];
-        
+
         // Store server data to one array
         for( var i=0 ; i <= serverData.page; i++){
           
@@ -103,7 +114,7 @@ $("document").ready(function(){
                             
                         }).catch(function(err){
 
-                            alert("❗️Sorry, the unkown server error has occured. Try later.")
+                            alert("❗️Sorry, Too many request or the unkown server error has occured. Try again with the less number of records to retrieve or try later.")
                             console.log('🚧 Error message: ',err);
                             throw new Error('Server Error');
 

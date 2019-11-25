@@ -83,6 +83,7 @@ form > input {
 .index {
     font-size: 2rem;
     padding: 0 1rem;
+    min-width: 4rem; 
 }
 .title{ 
     font-weight: bolder; 
