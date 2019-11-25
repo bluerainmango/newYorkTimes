@@ -2,29 +2,29 @@ $("document").ready(function(){
 
     // User input data storage
     var userInput = {
-                        term: null, // Search Term
-                        num: null, // Number of Records to Retrieve
-                        startYear: null,
-                        endYear: null    
-                    }
-
+        term: null, // Search Term
+        num: null, // Number of Records to Retrieve
+        startYear: null,
+        endYear: null    
+    }
+    
     // Server data storage
     var serverData = {
-                        articles:[],
-                        apiKey : "IhK2NlSFPIdwQGo1U2sVriGpkZ8FcBFs",
-                        page : 0,
-                        currentDate: function(){
-                            var currentDate = new Date();
-
-                            var year = currentDate.getFullYear();
-                            var month = currentDate.getMonth()+1;
-                                month = month < 10 ? '0' + month : month;
-                            var day = currentDate.getDate();
-                                day = day < 10 ? '0' + day : day;
-                            
-                            return `${year}${month}${day}`;
-                        }
-                    }
+        articles:[],
+        apiKey : "IhK2NlSFPIdwQGo1U2sVriGpkZ8FcBFs",
+        page : 0,
+        currentDate: function(){
+            var currentDate = new Date();
+    
+            var year = currentDate.getFullYear();
+            var month = currentDate.getMonth()+1;
+                month = month < 10 ? '0' + month : month;
+            var day = currentDate.getDate();
+                day = day < 10 ? '0' + day : day;
+            
+            return `${year}${month}${day}`;
+        }
+    }
 
     function getUserInput(){
 
@@ -37,7 +37,7 @@ $("document").ready(function(){
     }
     function inputValidation(){
 
-        // If Search term or Number of records to retrieve is missing
+        // 1. If Search term or Number of records to retrieve is missing
         if(!(userInput.term && userInput.num)){
             
             alert("Please insert all the required fields : Search Term, Number of records to retrieve");
@@ -45,9 +45,9 @@ $("document").ready(function(){
 
         }
         
-        // If option value is invalid
-            // 1. Start or End year is not 4 digits
-            // 2. Start year is bigger than End year
+        // 2. If option value is invalid
+            // a. Start or End year is not 4 digits
+            // b. Start year is bigger than End year
         if(userInput.startYear && userInput.startYear.length !== 4 
             || userInput.endYear && userInput.endYear.length !== 4
             || Number(userInput.startYear) > Number(userInput.endYear)){
@@ -64,45 +64,53 @@ $("document").ready(function(){
         serverData.page = ( num < 10 ) ? 0 : Math.floor(num / 10); 
    
     }
-    function queryFactory(){
+    function queryFactory(page){
                 
-        var query = `http://www.whateverorigin.org/get?url=https://api.nytimes.com/svc/search/v2/articlesearch.json?page=${serverData.page}&q=${userInput.term}&fl=web_url,headline,byline&api-key=${serverData.apiKey}`;
+        var query = `https://api.nytimes.com/svc/search/v2/articlesearch.json?page=${page}&q=${userInput.term}&fl=web_url,headline,byline&api-key=${serverData.apiKey}`;
   
+        // If the option field has a value, validate it
         if(userInput.startYear || userInput.endYear){
-
+            
+            // If one of the option field is empty, set to default( Start date: 1900-01-01, End date: today )
             var beginDateQuery = userInput.startYear ? `&begin_date=${userInput.startYear+'0101'}` : 19000101;
             var endDateQuery = userInput.endYear ? `&end_date=${userInput.endYear+'1231'}` : `&end_date=${serverData.currentDate()}`;
             
             query = query.concat(beginDateQuery, endDateQuery);
             
-            return query;
         }
+        return query;
     }
     function getServerData(e){
         
         pagenation(userInput.num);
         
+        // Store server data to one array
         for( var i=0 ; i <= serverData.page; i++){
           
-            var queryUrl = queryFactory();
+            var queryUrl = queryFactory(i);
 
             console.log('Getting data from server....🔋', 'queryUrl🔜: ', queryUrl)
 
-            $.ajax({
-                url: queryUrl,
-                method: "GET"
-            }).then(function(response){
+            var ajax = $.ajax({
+                            url: queryUrl,
+                            method: "GET"
+                        }).then(function(response){
 
-                console.log("Status: Success!🍓");
-                serverData.articles = serverData.articles.concat(response.response.docs);
-                renderArticles();
+                            console.log("Status: Success!🍓");
+                            serverData.articles = serverData.articles.concat(response.response.docs);
+                            
+                        }).catch(function(err){
 
-            }).catch(function(err){
-                alert("❗️Sorry, the unkown server error occured. Try later.")
-                console.log('🚧 Error message: ',err);
-                throw new Error('Server Error');
-            })
+                            alert("❗️Sorry, the unkown server error has occured. Try later.")
+                            console.log('🚧 Error message: ',err);
+                            throw new Error('Server Error');
+
+                        })
         }
+
+        // Render to DOM
+        ajax.then(function(){ renderArticles() });
+
     }
     function renderArticles(){
 
