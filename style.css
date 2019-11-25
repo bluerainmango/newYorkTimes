@@ -24,7 +24,6 @@ body {
 /*************************************/
 .heading_title {
     padding: 4rem 0;
-    /* background-image: linear-gradient(to right bottom, rgb(0, 204, 255), rgb(89, 0, 255)); */
     background-color: #3498db;
     color: #fff;
 }
@@ -84,6 +83,7 @@ form > input {
 .index {
     font-size: 2rem;
     padding: 0 1rem;
+    min-width: 4rem; 
 }
 .title{ 
     font-weight: bolder; 

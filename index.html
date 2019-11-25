@@ -17,7 +17,7 @@
     <form>
         <div class="heading">Search Parameters</div>
         <input id="term" type="text" placeholder="Search Term">
-        <input id="num" type="number" placeholder="Number of Records to Retrieve">
+        <input id="num" min="1" max="30" type="number" placeholder="Number of Records to Retrieve ( max : 30 )">
         <input id="startYear" type="number" placeholder="Start Year(Optional)">
         <input id="endYear" type="number" placeholder="End Year(Optional)">
         <button id="searchBtn" class="btn" type="submit">🎮 Search</button>
@@ -37,10 +37,6 @@
 <!-- jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-<!-- js 1.Get userInput & Render to web -->
-<script src ="./dom.js"></script>
-
-<!-- js 2.Get data from API -->
 <script src="./script.js"></script>
 
 </body>
