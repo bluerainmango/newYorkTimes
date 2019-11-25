@@ -45,26 +45,31 @@ $("document").ready(function(){
 
         }
 
-        // 2. If option value is invalid
+        // 2. If number of records to retrieve is not between 1 and 30
+        if( Number(userInput.num) > 30 || Number(userInput.num) < 1 ){
+            alert("Please insert the number of records to retrieve between 1 and 30. This is to prevent from too many or invalid request to server and we can get you the data stably.");
+            throw new Error('🚧 Too high or negative number to request.'); 
+        }
+
+        // 3. If option value is invalid
             // a. Start or End year is not 4 digits
+            // b. Start or End year cannot be after current year
         if( (userInput.startYear && userInput.startYear.length !== 4) 
-            || (userInput.endYear && userInput.endYear.length !== 4) ){
+            || (userInput.endYear && userInput.endYear.length !== 4) 
+            || (Number(userInput.startYear) > new Date().getFullYear())
+            || (Number(userInput.endYear) > new Date().getFullYear())
+            ){
  
-            alert("Invalid input for Start Year or End Year! Please insert full year and ");
+            alert("Invalid input for Start Year or End Year! Please insert a valid 4 digit number of the year");
             throw new Error('🚧 Invalid input for Start Year or End Year.'); 
 
         }
-            // b. Start year is after of End year
+            // c. Start year is after of End year
         if(userInput.startYear && userInput.endYear){
             if(Number(userInput.startYear) > Number(userInput.endYear)){
                 alert("Start Year cannot be after End Year! Please make sure the Start Year is before or the same of the End Year.");
                 throw new Error('🚧 The Start Year is after of the End Year.'); 
             }
-        }
-
-        if( Number(userInput.num) > 30 || Number(userInput.num) < 0 ){
-            alert("Please insert the number of records to retrieve between 1 and 30. This is to prevent from too many request to server and we can get you the data stably.");
-            throw new Error('🚧 Too high or negative number to request.'); 
         }
         
         console.log('Getting user input....🦊', userInput)
